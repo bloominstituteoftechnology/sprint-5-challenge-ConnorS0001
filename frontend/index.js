@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 async function sprintChallenge5() { // Note the async keyword so you can use `await` inside sprintChallenge5
   // 👇 WORK ONLY BELOW THIS LINE 👇
   // 👇 WORK ONLY BELOW THIS LINE 👇
@@ -9,9 +10,26 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   // ❗ Use the variables `mentors` and `learners` to store the data.
   // ❗ Use the await keyword when using axios.
 
-  let mentors = [] // fix this
-  let learners = [] // fix this
+  let mentors = [
+    //MY CODE BEGINS
+      axios
+      .get("http://localhost:3003/api/mentors")
+      .then((result) => (mentors = result.data))
+      .catch((error) => (console.log(error)))
+    //MY CODE ENDS
+  ] 
+  let learners = [
+    //MY CODE BEGINS
+    axios
+    .get("http://localhost:3003/api/learners")
+    .then((result) => (learners = result.data))
+    .catch((error) => (console.log(error)))
+    //MY CODE ENDS
+  ] 
 
+  console.log(mentors)
+  console.log(learners)
+    
   // 👆 ==================== TASK 1 END ====================== 👆
 
   // 👇 ==================== TASK 2 START ==================== 👇
@@ -28,6 +46,9 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   //     "Grace Hopper"
   //   ]`
   // }
+
+  //MY CODE BEGINS
+  //MY CODE ENDS
 
   // 👆 ==================== TASK 2 END ====================== 👆
 
