@@ -10,25 +10,36 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   // ❗ Use the variables `mentors` and `learners` to store the data.
   // ❗ Use the await keyword when using axios.
 
-  let mentors = [
-    //MY CODE BEGINS
-      axios
-      .get("http://localhost:3003/api/mentors")
-      .then((result) => (mentors = result.data))
-      .catch((error) => (console.log(error)))
-    //MY CODE ENDS
-  ] 
-  let learners = [
-    //MY CODE BEGINS
-    axios
-    .get("http://localhost:3003/api/learners")
-    .then((result) => (learners = result.data))
-    .catch((error) => (console.log(error)))
-    //MY CODE ENDS
-  ] 
+  let mentors = [] 
+  let learners = [] 
 
-  console.log(mentors)
-  console.log(learners)
+  axios.get("http://localhost:3003/api/mentors")
+    .then(response => {
+      mentors = response.data
+    })
+    .catch(error => {
+      console.console.log(error)
+    })
+
+  axios.get("http://localhost:3003/api/learners")
+    .then(response => {
+      learners = response.data
+
+      for (let a = 0; a < learners.length; a++) {
+        for (let b = 0; b < learners[a].mentors.length; b++) {
+          for (let c = 0; c < mentors.length; c++) {
+            if (mentors[c].id === learners[a].mentors[b]) {
+              learners[a].mentors[b] = `${mentors[c].firstName} ${mentors[c].lastName}`
+            }
+          }
+        }        
+      }
+      console.log(learners)        
+    })
+    .catch(error => {
+      console.console.log(error)
+    })
+
     
   // 👆 ==================== TASK 1 END ====================== 👆
 
