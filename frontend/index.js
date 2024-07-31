@@ -13,34 +13,25 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   let mentors = [] 
   let learners = [] 
 
-  axios.get("http://localhost:3003/api/mentors")
-    .then(response => {
-      mentors = response.data
-    })
-    .catch(error => {
-      console.console.log(error)
-    })
+  // MY CODE //
+    // fetching the mentors data
+    const mentorsAwait = await axios.get("http://localhost:3003/api/mentors")
+      mentors = mentorsAwait.data
 
-  axios.get("http://localhost:3003/api/learners")
-    .then(response => {
-      learners = response.data
-
-      for (let a = 0; a < learners.length; a++) {
-        for (let b = 0; b < learners[a].mentors.length; b++) {
-          for (let c = 0; c < mentors.length; c++) {
-            if (mentors[c].id === learners[a].mentors[b]) {
-              learners[a].mentors[b] = `${mentors[c].firstName} ${mentors[c].lastName}`
-            }
-          }
-        }        
-      }
-      console.log(learners)        
-    })
-    .catch(error => {
-      console.console.log(error)
-    })
-
+    // fetching the learners data
+    const learnersAwait = await axios.get("http://localhost:3003/api/learners")
+      learners = learnersAwait.data
     
+    
+    // testing to make sure everything works
+      ///*
+        console.log('mentors')
+        console.log(mentors)
+        console.log('learners')
+        console.log(learners)
+      //*/
+    //MY CODE ENDS //        
+            
   // 👆 ==================== TASK 1 END ====================== 👆
 
   // 👇 ==================== TASK 2 START ==================== 👇
@@ -58,8 +49,20 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   //   ]`
   // }
 
-  //MY CODE BEGINS
-  //MY CODE ENDS
+  // MY CODE 
+
+    // fixing the learners array with mentor data
+          for (let a = 0; a < learners.length; a++) {
+            for (let b = 0; b < learners[a].mentors.length; b++) {
+              for (let c = 0; c < mentors.length; c++) {
+                if (mentors[c].id === learners[a].mentors[b]) {
+                  learners[a].mentors[b] = `${mentors[c].firstName} ${mentors[c].lastName}`
+                }
+              }
+            }
+          }
+
+  // MY CODE ENDS
 
   // 👆 ==================== TASK 2 END ====================== 👆
 
@@ -71,6 +74,7 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   // 👇 ==================== TASK 3 START ==================== 👇
 
   for (let learner of learners) { // looping over each learner object
+    
 
     // 🧠 Flesh out the elements that describe each learner
     // ❗ Give the elements below their (initial) classes, textContent and proper nesting.
@@ -80,10 +84,35 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
     // ❗ Inspect the mock site closely to understand what the initial texts and classes look like!
 
     const card = document.createElement('div')
-    const heading = document.createElement('h3')
-    const email = document.createElement('div')
-    const mentorsHeading = document.createElement('h4')
+    const heading = document.createElement('h3') 
+    const email = document.createElement('div') 
+    const mentorsHeading = document.createElement('h4') 
     const mentorsList = document.createElement('ul')
+
+    // MY CODE //
+
+  // <div class = "card">
+      card.classList.add("card")
+  //   <h3> learner.fullName </h3>
+        heading.textContent = `${learner.fullName}`
+        card.appendChild(heading)
+  //   <div> learner.email </div>
+        email.textContent = `${learner.email}`
+        card.appendChild(email)
+  //   <h4 class = "closed">
+        mentorsHeading.classList.add('closed')
+        mentorsHeading.textContent = 'Mentors'
+        card.appendChild(mentorsHeading)
+  //   <ul>
+  //     <li>mentor[x]</li>
+        for (mentorIndex of learner.mentors) {
+          const mentorListElement = document.createElement('li')
+          mentorListElement.textContent = `${mentorIndex}`
+          mentorsList.appendChild(mentorListElement)
+        }
+  //     
+    
+    // MY CODE ENDS //
 
     // 👆 ==================== TASK 3 END ====================== 👆
 
